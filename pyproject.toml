@@ -1,0 +1,66 @@
+[build-system]
+requires = ["hatchling>=1.28.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "my-sudoku"
+dynamic = ["version"]
+description = "Sudoku, just for you."
+readme = "README.md"
+requires-python = ">=3.14"
+license = "AGPL-3.0-only"
+keywords = []
+authors = [
+  { name = "Charles Levesque", email = "c_levesque@live.ca" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: Implementation :: CPython",
+]
+dependencies = [
+  "pyside6>=6.10.2",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=9.0.2",
+]
+
+[project.scripts]
+my-sudoku = "my_sudoku:main"
+
+[project.urls]
+Documentation = "https://github.com/charleslevesque/my-sudoku#readme"
+Issues = "https://github.com/charleslevesque/my-sudoku/issues"
+Source = "https://github.com/charleslevesque/my-sudoku"
+
+[tool.hatch.version]
+path = "src/my_sudoku/__about__.py"
+
+[tool.hatch.envs.types]
+extra-dependencies = [
+  "mypy>=1.0.0",
+]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/my_sudoku tests}"
+
+[tool.coverage.run]
+source_pkgs = ["my_sudoku", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/my_sudoku/__about__.py",
+]
+
+[tool.coverage.paths]
+my_sudoku = ["src/my_sudoku", "*/my_sudoku/src/my_sudoku"]
+tests = ["tests", "*/my_sudoku/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
